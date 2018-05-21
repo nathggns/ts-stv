@@ -82,6 +82,22 @@ function complete<T>(
     return value;
 }
 
+function iterateN<T>(
+    iterable: Iterable<T>,
+    n: number
+): T|undefined {
+    const iterator = iterable[Symbol.iterator]();
+    let value;
+    for (let i = 0; i < n; i++) {
+        const result = iterator.next();
+        if (result.done) {
+            break;
+        }
+        value = result.value;
+    }
+    return value;
+}
+
 function* calculateByStage(
     ballot: Ballot,
     positions = 1,
@@ -144,13 +160,6 @@ function* calculateByStage(
     }
 }
 
-const candidates = {
-    green: {name: 'green'},
-    blue: {name: 'blue'},
-    yellow: {name: 'yellow'},
-    red: {name: 'red'},
-};
-
 export interface PublicAPI<T> {
     (ballot: Ballot, positions?: number): T;
 }
@@ -168,24 +177,19 @@ export const count: PublicAPI<CalculatedBallot> = (ballot, positions) => {
     return result;
 };
 
+export const countToStage = (stage: number): PublicAPI<CalculatedBallot> => (ballot, positions) => {
+    const result = iterateN(iterate(ballot, positions), stage + 1);
+
+    if (!result) {
+        throw new Error('Dunno');
+    }
+
+    return result;
+};
+
 export const candidate = (() => {
     const map: { [key: string]: Candidate } = {};
 
     return (name: string): Candidate => map[name] || (map[name] = { name });
 })();
-
-const { result, stage } = count(
-    {
-        votes: [
-            { preferences: [ candidate('green'), candidate('blue') ] },
-            { preferences: [ candidate('green'), candidate('yellow') ] },
-            { preferences: [ candidate('yellow'), candidate('green') ] },
-            { preferences: [ candidate('yellow'), RON ] },
-            { preferences: [ candidate('yellow'), candidate('green') ] },
-            { preferences: [ candidate('blue'), candidate('green') ] },
-        ]
-    }
-);
-console.log(`Took ${stage + 1 } stages to calculate`);
-console.log(`${result[0].candidate.name} wins!`);
 
