@@ -1,0 +1,30 @@
+{
+  "name": "ts-stv",
+  "author": "Nate Higgins <nat@nath.is>",
+  "homepage": "https://github.com/nathggns/ts-stv",
+  "version": "0.1.0",
+  "main": "lib/stv.js",
+  "typings": "lib/stv.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathggns/ts-stv.git"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "build": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts,.tsx\"",
+    "postinstall": "postinstall-build lib"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.44",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.44",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "@babel/preset-typescript": "^7.0.0-beta.44",
+    "typescript": "^2.8.1"
+  },
+  "dependencies": {
+    "postinstall-build": "^5.0.1"
+  }
+}
