@@ -12,7 +12,7 @@
   },
   "scripts": {
     "type-check": "tsc --noEmit",
-    "build": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts,.tsx\"",
+    "build": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps",
     "postinstall": "postinstall-build lib"
   },
   "devDependencies": {
