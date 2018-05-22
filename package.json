@@ -11,20 +11,40 @@
     "url": "git+https://github.com/nathggns/ts-stv.git"
   },
   "scripts": {
-    "type-check": "tsc --noEmit",
-    "build": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps",
+    "type-check": "tsc --emitDeclarationOnly",
+    "build": "yarn type-check && babel src --out-dir lib --extensions \".ts,.tsx\"",
     "postinstall": "postinstall-build lib"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.44",
     "@babel/core": "^7.0.0-beta.44",
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.44",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.47",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.44",
     "@babel/preset-env": "^7.0.0-beta.44",
-    "@babel/preset-typescript": "^7.0.0-beta.44",
+    "@babel/preset-typescript": "^7.0.0-beta.47",
+    "@types/jest": "^22.2.3",
+    "jest": "^22.4.4",
     "typescript": "^2.8.1"
   },
   "dependencies": {
-    "postinstall-build": "^5.0.1"
+    "postinstall-build": "^5.0.1",
+    "ts-jest-babel-7": "^22.0.7"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testMatch": [
+      "**/tests/*.+(ts|js)"
+    ],
+    "globals": {
+      "ts-jest": {
+        "useBabelrc": true
+      }
+    }
   }
 }
